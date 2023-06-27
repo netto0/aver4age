@@ -2,6 +2,7 @@
     --backgroundGray: #d9d9d9;
     --darkGray: #333;
     --titleCyan: #077880;
+    --defaultCurve: 15px;
 }
 
 * {
