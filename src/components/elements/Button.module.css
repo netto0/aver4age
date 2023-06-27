@@ -1,8 +1,8 @@
-button {
+.button {
     border: none;
     background-color: var(--backgroundGray);
     border-radius: var(--defaultCurve);
-    width: 82px;
+    min-width: 82px;
     height: 65px;
     display: flex;
     justify-content: center;
@@ -10,27 +10,28 @@ button {
     gap: .5rem;
     color: var(--darkGray);
     transition: .1s;
+    padding: 0;
 }
 
-button:hover {
+.button:hover {
     cursor: pointer;
     scale: 1.05;
     transition: .1s;
 }
 
-button:active {
+.button:active {
     scale: 1;
 }
  
-button.larger {
-    width: 150px;
+.button.larger {
+    min-width: 150px;
     height: 65px;
 }
 
-button span {
+.button span {
     font-size: 24px;
 }
 
-button svg {
+.button svg {
     font-size: 40px;
 }

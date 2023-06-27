@@ -1,0 +1,37 @@
+.inputContainer {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputContainer input {
+    background-color: var(--backgroundGray);
+    border: none;
+    border-radius: var(--defaultCurve);
+    text-indent: 1rem;
+    height: 100%;
+    width: 100%;
+    font-size: 24px;
+    color: var(--darkGray);
+
+}
+
+.inputContainer input::placeholder {
+    color: var(--lightGray);
+    font-size: 24px;
+}
+
+.button {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    align-self: center;
+    font-size: 30px;
+    right: .5rem;
+    color: var(--darkGray);
+}
+
+.button:hover {
+    cursor: pointer;
+}

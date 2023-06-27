@@ -2,7 +2,9 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin: 0 10rem;
+    /* background-color: red; */
+    padding: 1.5rem 0;
 }
