@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className={styles.container}>
+    <div className={styles.appContainer}>
       <Header />
       <Averages />
       <Footer />

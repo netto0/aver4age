@@ -1,6 +1,15 @@
-div.container{
+/* div.appContainer{
     display: flex;
     flex-direction: column;
     height: 100vh;
+    max-height: 100vh;
+    justify-content: space-between;
+    background-color: red;
+} */
+div.appContainer {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto;
     justify-content: space-between;
 }
