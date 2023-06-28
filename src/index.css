@@ -1,6 +1,8 @@
 :root {
     --backgroundGray: #d9d9d9;
+    --scndBgGray: #f0f0f0;
     --darkGray: #333;
+    --red: #ee3a57;
     --lightGray: #9f9f9f;
     --titleCyan: #077880;
     --defaultCurve: 15px;
