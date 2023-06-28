@@ -7,6 +7,8 @@
     background-color: red;
 } */
 div.appContainer {
+    background-color: var(--lightGray);
+    background-color: #fff;
     height: 100vh;
     display: grid;
     grid-template-columns: 100%;

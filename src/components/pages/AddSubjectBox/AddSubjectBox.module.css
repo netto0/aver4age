@@ -1,0 +1,56 @@
+.addSubjectContainer {
+    background-color: var(--scndBgGray);
+    position: relative;
+    width: 665px;
+    height: 625px;
+    height: fit-content;
+    padding: 1.5rem 1rem;
+    border-radius: var(--defaultCurve);
+}
+
+.addSubjectContainer form {
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addSubjectContainer form legend{
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--darkGray);
+}
+
+.addSubjectContainer svg {
+    position: absolute;
+    /* color: var(--darkGray); */
+    color: #888;
+    top: 5px;
+    right: 5px;
+    font-size: 2rem;
+}
+
+.addSubjectContainer svg:hover {
+    cursor: pointer;
+}
+
+.addSubjectContainer form input{
+    height: 50px;
+    width: 100%;
+}
+
+.addSubjectContainer form button {
+    height: 50px;
+    width: 100%;
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.double {
+    display: flex;
+    width: 100%;
+    gap: .5rem;
+}

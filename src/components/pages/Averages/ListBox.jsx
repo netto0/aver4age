@@ -1,6 +1,8 @@
 import styles from "./ListBox.module.css";
 import getSubjects from "../../../api/Subjects";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { GlobalSettingsContext } from "../../../providers/globalSettings";
+import EditSubjectBox from "../EditSubjectBox/EditSubjectBox";
 
 export default function ListBox() {
   const [subjects, setSubjects] = useState([]);
@@ -33,6 +35,9 @@ export default function ListBox() {
     getData();
   }, []);
 
+
+  const {setModalActive} = React.useContext(GlobalSettingsContext)
+
   return (
     <div className={styles.listboxContainer}>
       <table>
@@ -56,7 +61,7 @@ export default function ListBox() {
             const average = getAverage(avaSum, subject.pim, subject.exam);
 
             return (
-              <tr key={id} className={styles.tableRow}>
+              <tr key={id} className={styles.tableRow} onClick={() => setModalActive(<EditSubjectBox />)}>
                 <td>{subject.semester}</td>
                 <td className={styles.subjectName}>{subject.name}</td>
                 <td>{avaSum.toFixed(2)}</td>

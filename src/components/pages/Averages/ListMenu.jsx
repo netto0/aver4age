@@ -5,6 +5,7 @@ import { BiFilter, BiPlus } from 'react-icons/bi'
 import { PiMagnifyingGlassBold } from 'react-icons/pi'
 import React from 'react'
 import { GlobalSettingsContext } from '../../../providers/globalSettings'
+import AddSubjectBox from '../AddSubjectBox/AddSubjectBox'
 
 export default function ListMenu() {
     
@@ -12,9 +13,9 @@ export default function ListMenu() {
 
     return (
         <div className={styles.listMenuContainer}>
-            <Button label={<BiPlus />} onClick={() => setModalActive("OI")}/>
-            <Input placeholder={"Digite o que deseja buscar..."} icon={<PiMagnifyingGlassBold />}/>
-            <Button label="Nome" icon={<BiFilter />} larger={true} />
+            <Button label={<BiPlus />} onClick={() => setModalActive(<AddSubjectBox/>)}/>
+            <Input placeholder={"Digite o que deseja buscar..."} icon={<PiMagnifyingGlassBold />} align='left'/>
+            <Button label="Nome" icon={<BiFilter />} />
             <Button label="OK" />
         </div>
     )

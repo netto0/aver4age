@@ -8,7 +8,7 @@ export default function Modal({ children }) {
     const {setModalActive} = React.useContext(GlobalSettingsContext)
   
     return (
-    <div className={`${styles.modalContainer} ${children && styles.active}`} onClick={() => setModalActive(null)}>
+    <div className={`${styles.modalContainer} ${children && styles.active}`}>
       {children}
     </div>
   );

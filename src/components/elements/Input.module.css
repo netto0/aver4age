@@ -13,13 +13,17 @@
     height: 100%;
     width: 100%;
     font-size: 24px;
-    color: var(--darkGray);
-
+    color: var(--darkGray);    
 }
+
+/* .inputContainer input:active {
+    border: none;
+} */
 
 .inputContainer input::placeholder {
     color: var(--lightGray);
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 300;
 }
 
 .button {
