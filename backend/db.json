@@ -1,19 +1,6 @@
 {
   "subjects": [
     {
-      "id": 1,
-      "name": "FUNDAMENTOS DE SISTEMAS OPERACIONAIS",
-      "semester": 1,
-      "ava1": 2,
-      "ava2": 2,
-      "ava3": 1.75,
-      "ava4": 2.25,
-      "pim": 7,
-      "exam": 9,
-      "summerSchoolGrade": null
-    },
-    {
-      "id": 2,
       "name": "LÓGICA",
       "semester": 1,
       "ava1": 2.25,
@@ -22,7 +9,8 @@
       "ava4": 2.25,
       "pim": 7,
       "exam": 7,
-      "summerSchoolGrade": null
+      "summerSchoolGrade": null,
+      "id": 2
     },
     {
       "id": 3,
@@ -61,29 +49,28 @@
       "summerSchoolGrade": 8
     },
     {
-      "id": 6,
       "name": "PRINCÍPIOS DE SISTEMAS DE INFORMAÇÃO",
       "semester": 1,
-      "ava1": 2.5,
+      "ava1": "3",
       "ava2": 2.25,
-      "ava3": 2,
+      "ava3": "1",
       "ava4": 2.25,
       "pim": 8,
       "exam": 8,
-      "summerSchoolGrade": null
+      "summerSchoolGrade": null,
+      "id": 6
     },
     {
-      "id": 7,
-      "name": "COMUNICAÇÃO APLICADA",
-      "semester": 1,
-      "ava1": 2,
-      "ava2": 2.5,
-      "ava3": 2.25,
-      "ava4": 2.25,
-      "pim": 8,
-      "exam": 7,
-      "summerSchoolGrade": null
+      "name": "TESTE",
+      "semester": "2",
+      "ava1": "",
+      "ava2": "",
+      "ava3": "",
+      "ava4": "",
+      "pim": "",
+      "exam": "",
+      "summerSchoolGrade": "",
+      "id": 7
     }
   ]
 }
-

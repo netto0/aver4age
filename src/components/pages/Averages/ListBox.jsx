@@ -1,42 +1,58 @@
 import styles from "./ListBox.module.css";
-import getSubjects from "../../../api/Subjects";
+// import {getSubjects, getSubject} from "../../../api/Subjects";
+import {getSubject} from "../../../api/Subjects";
 import React, { useCallback, useEffect, useState } from "react";
 import { GlobalSettingsContext } from "../../../providers/globalSettings";
 import EditSubjectBox from "../EditSubjectBox/EditSubjectBox";
 
 export default function ListBox() {
-  const [subjects, setSubjects] = useState([]);
+  const {formData, setFormData, getData, setModalActive, subjects} = React.useContext(GlobalSettingsContext)
 
   function getAverage(ava, pim, exam) {
-    return ((ava + 2 * pim + 7 * exam) / 10).toFixed(2);
+    if (ava && pim && exam) {
+      return ((parseFloat(ava) + (2 * parseFloat(pim)) + (7 * parseFloat(exam))) / 10).toFixed(2);
+    } else {
+      return "-"
+    }
   }
 
   function getAvaSum(ava1, ava2, ava3, ava4) {
-    return ava1 + ava2 + ava3 + ava4;
-  }
+    if (ava1 && ava2 && ava3 && ava4) {
+      return (parseFloat(ava1) + parseFloat(ava2) + parseFloat(ava3) + parseFloat(ava4)).toFixed(2);
+  } else {
+    return "-"
+  }}
 
   function getSituation(average, exam) {
     if (average < 7) {
       const finalAverage = (parseFloat(average) + parseFloat(exam)) / 2;
       return finalAverage > 5 ? "Aprovado" : "Reprovado";
-    } else {
+    } else if(average > 7){
       return "Aprovado";
+    } else {
+      return "Pendente"
     }
-
-    //
   }
 
-  const getData = useCallback(async () => {
-    const response = await getSubjects();
-    if (response) setSubjects(response);
+  const getSingleSubject = useCallback(async (id) => {
+    const response = await getSubject(id);
+    if (response) {
+      setFormData({...formData, ...response})
+    }
   }, []);
+
+  const openEditPage = (e) => {
+    const rowID = e.target.parentElement.id 
+    getSingleSubject(rowID)
+    setModalActive(<EditSubjectBox/>)
+  }
+
 
   useEffect(() => {
     getData();
   }, []);
 
-
-  const {setModalActive} = React.useContext(GlobalSettingsContext)
+  const {} = React.useContext(GlobalSettingsContext)
 
   return (
     <div className={styles.listboxContainer}>
@@ -61,12 +77,13 @@ export default function ListBox() {
             const average = getAverage(avaSum, subject.pim, subject.exam);
 
             return (
-              <tr key={id} className={styles.tableRow} onClick={() => setModalActive(<EditSubjectBox />)}>
+              // <tr key={id} className={styles.tableRow} onClick={() => setModalActive(<EditSubjectBox />)}>
+              <tr key={id} className={styles.tableRow} id={id} onClick={(e) => openEditPage(e)}>
                 <td>{subject.semester}</td>
                 <td className={styles.subjectName}>{subject.name}</td>
-                <td>{avaSum.toFixed(2)}</td>
-                <td>{subject.pim.toFixed(2)}</td>
-                <td>{subject.exam.toFixed(2)}</td>
+                <td>{avaSum}</td>
+                <td>{subject.pim ? parseFloat(subject.pim).toFixed(2) : "-"}</td>
+                <td>{subject.exam ? parseFloat(subject.exam).toFixed(2): "-"}</td>
                 <td className={styles.average}>
                   {average}
                   {average < 7 && <div className={styles.redCircle} />}
@@ -74,7 +91,7 @@ export default function ListBox() {
                 <td>{average < 7 ? (10 - average).toFixed(2) : "-"}</td>
                 <td>
                   {subject.summerSchoolGrade
-                    ? subject.summerSchoolGrade.toFixed(2)
+                    ? (subject.summerSchoolGrade).toFixed(2)
                     : "-"}
                 </td>
                 <td>{getSituation(average, subject.summerSchoolGrade)}</td>

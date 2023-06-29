@@ -15,10 +15,10 @@
     font-size: 24px;
     color: var(--darkGray);    
 }
-
-/* .inputContainer input:active {
-    border: none;
-} */
+.inputContainer input::-webkit-outer-spin-button, .inputContainer input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 .inputContainer input::placeholder {
     color: var(--lightGray);
