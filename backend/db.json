@@ -23,54 +23,6 @@
       "exam": "1",
       "summerSchoolGrade": "",
       "id": 5
-    },
-    {
-      "name": "TESTE3",
-      "semester": "11",
-      "ava1": "",
-      "ava2": "",
-      "ava3": "",
-      "ava4": "",
-      "pim": "",
-      "exam": "",
-      "summerSchoolGrade": "",
-      "id": 6
-    },
-    {
-      "name": "AAAA",
-      "semester": "2",
-      "ava1": "",
-      "ava2": "",
-      "ava3": "",
-      "ava4": "",
-      "pim": "",
-      "exam": "",
-      "summerSchoolGrade": "",
-      "id": 7
-    },
-    {
-      "name": "BBB",
-      "semester": "3",
-      "ava1": "",
-      "ava2": "",
-      "ava3": "",
-      "ava4": "",
-      "pim": "",
-      "exam": "",
-      "summerSchoolGrade": "",
-      "id": 8
-    },
-    {
-      "name": "TESTE232222",
-      "semester": "1",
-      "ava1": "5",
-      "ava2": "0",
-      "ava3": "2",
-      "ava4": "5",
-      "pim": "10",
-      "exam": "10",
-      "summerSchoolGrade": "",
-      "id": 9
     }
   ]
 }

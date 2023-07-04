@@ -7,7 +7,7 @@ import DeleteSubjectBox from "../SubjectBoxes/DeleteSubjectBox";
 import AddOrEditSubjectBox from "../SubjectBoxes/AddOrEditSubjectBox";
 
 export default function ListBox() {
-  const { formData, setFormData, getData, setModalActive, subjects } =
+  const { formData, setFormData, getData, setModalActive, subjects, searchBarValue } =
     React.useContext(GlobalSettingsContext);
 
   function getAverage(ava, pim, exam) {
@@ -67,7 +67,6 @@ export default function ListBox() {
     getData();
   }, []);
 
-  const {} = React.useContext(GlobalSettingsContext);
   return (
     <div className={styles.listboxContainer}>
       <table>
@@ -89,56 +88,59 @@ export default function ListBox() {
             const { ava1, ava2, ava3, ava4, id } = subject;
             const avaSum = getSum([ava1, ava2, ava3, ava4]);
             const average = getAverage(avaSum, subject.pim, subject.exam);
-            return (
-              <tr
-                key={id}
-                className={styles.tableRow}
-                id={id}
-              >
-                <td onClick={(e) => openEditPage(e)}>{subject.semester}</td>
-                <td onClick={(e) => openEditPage(e)} className={styles.subjectName}>{subject.name}</td>
-                <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
-                  {avaSum[0]}
-                  {avaSum[1] && (
-                    <div
-                      className={`${styles.indicatorCircle} ${styles.yellow}`}
-                      title="Há notas não lançadas"
-                    />
-                  )}
-                </td>
-                <td onClick={(e) => openEditPage(e)}>
-                  {subject.pim ? parseFloat(subject.pim).toFixed(2) : "-"}
-                </td>
-                <td onClick={(e) => openEditPage(e)}>
-                  {subject.exam ? parseFloat(subject.exam).toFixed(2) : "-"}
-                </td>
-                <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
-                  {average}
-                  {average < 7 && (
-                    <div
-                      className={`${styles.indicatorCircle} ${styles.red}`}
-                      title="Média insuficiente"
-                    />
-                  )}
-                </td>
-                <td onClick={(e) => openEditPage(e)}>{average < 7 ? (10 - average).toFixed(2) : "-"}</td>
-                <td onClick={(e) => openEditPage(e)}>
-                  {subject.summerSchoolGrade
-                    ? subject.summerSchoolGrade.toFixed(2)
-                    : "-"}
-                </td>
-                <td onClick={(e) => openEditPage(e)}>
-                  {getSituation(average, subject.summerSchoolGrade, avaSum[1])}
-                </td>
-                <td className={styles.closeButtonContainer}>
-                  <div className={styles.closeButtonBox}>
-                    <div className={styles.closeButtonHover} onClick={(e) => openDeletePage(e)}/>
-                    <IoMdCloseCircleOutline 
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
+            if(searchBarValue == "" || subject.name.includes(searchBarValue)){
+              return (
+                <tr
+                  key={id}
+                  className={styles.tableRow}
+                  id={id}
+                >
+                  <td onClick={(e) => openEditPage(e)}>{subject.semester}</td>
+                  <td onClick={(e) => openEditPage(e)} className={styles.subjectName}>{subject.name}</td>
+                  <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
+                    {avaSum[0]}
+                    {avaSum[1] && (
+                      <div
+                        className={`${styles.indicatorCircle} ${styles.yellow}`}
+                        title="Há notas não lançadas"
+                      />
+                    )}
+                  </td>
+                  <td onClick={(e) => openEditPage(e)}>
+                    {subject.pim ? parseFloat(subject.pim).toFixed(2) : "-"}
+                  </td>
+                  <td onClick={(e) => openEditPage(e)}>
+                    {subject.exam ? parseFloat(subject.exam).toFixed(2) : "-"}
+                  </td>
+                  <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
+                    {average}
+                    {average < 7 && (
+                      <div
+                        className={`${styles.indicatorCircle} ${styles.red}`}
+                        title="Média insuficiente"
+                      />
+                    )}
+                  </td>
+                  <td onClick={(e) => openEditPage(e)}>{average < 7 ? (10 - average).toFixed(2) : "-"}</td>
+                  <td onClick={(e) => openEditPage(e)}>
+                    {subject.summerSchoolGrade
+                      ? subject.summerSchoolGrade.toFixed(2)
+                      : "-"}
+                  </td>
+                  <td onClick={(e) => openEditPage(e)}>
+                    {getSituation(average, subject.summerSchoolGrade, avaSum[1])}
+                  </td>
+                  <td className={styles.closeButtonContainer}>
+                    <div className={styles.closeButtonBox}>
+                      <div className={styles.closeButtonHover} onClick={(e) => openDeletePage(e)}/>
+                      <IoMdCloseCircleOutline 
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+
+            }
           })}
         </tbody>
       </table>

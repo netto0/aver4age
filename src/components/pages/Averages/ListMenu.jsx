@@ -1,22 +1,61 @@
-import Button from '../../elements/Button'
-import Input from '../../elements/Input'
-import styles from './ListMenu.module.css'
-import { BiFilter, BiPlus } from 'react-icons/bi'
-import { PiMagnifyingGlassBold } from 'react-icons/pi'
-import React from 'react'
-import { GlobalSettingsContext } from '../../../providers/globalSettings'
-import AddOrEditSubjectBox from '../SubjectBoxes/AddOrEditSubjectBox'
+import Button from "../../elements/Button";
+import Input from "../../elements/Input";
+import styles from "./ListMenu.module.css";
+import { BiSolidDownArrow, BiSolidUpArrow, BiPlus } from "react-icons/bi";
+import { PiMagnifyingGlassBold } from "react-icons/pi";
+import React, { useState } from "react";
+import { GlobalSettingsContext } from "../../../providers/globalSettings";
+import AddOrEditSubjectBox from "../SubjectBoxes/AddOrEditSubjectBox";
 
 export default function ListMenu() {
-    
-    const {setModalActive} = React.useContext(GlobalSettingsContext)
+  const { setModalActive, searchBarValue,
+setSearchBarValue } = React.useContext(GlobalSettingsContext);
+  const filterItem = ["Nome", "Média", "Situação"];
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [decrescentFilter, setDecrescentFilter] = useState(true);
 
-    return (
-        <div className={styles.listMenuContainer}>
-            <Button label={<BiPlus />} onClick={() => setModalActive(<AddOrEditSubjectBox windowType="add" />)}/>
-            <Input placeholder={"Digite o que deseja buscar..."} icon={<PiMagnifyingGlassBold />} align='left'/>
-            <Button label="Nome" icon={<BiFilter />} />
-            <Button label="OK" />
-        </div>
-    )
+  const changeIdx = () => {
+    if (currentIdx == filterItem.length - 1) {
+      setCurrentIdx(0);
+    } else {
+      setCurrentIdx(currentIdx + 1);
+    }
+  };
+
+  const searchBarHandleChange = (e) => {
+    setSearchBarValue(e.target.value.toUpperCase())
+  }
+
+  return (
+    <div className={styles.listMenuContainer}>
+      {searchBarValue}
+      <Button
+        label={<BiPlus />}
+        onClick={() => setModalActive(<AddOrEditSubjectBox windowType="add" />)}
+      />
+      <Input
+        placeholder={"Digite o nome da matéria que deseja buscar..."}
+        value= {searchBarValue}
+        icon={<PiMagnifyingGlassBold />}
+        align="left"
+        onChange={(e) => searchBarHandleChange(e)}
+      />
+      <Button
+        label={filterItem[currentIdx]}
+        icon={
+          decrescentFilter ? (
+            <BiSolidDownArrow
+              onClick={() => setDecrescentFilter(!decrescentFilter)}
+            />
+          ) : (
+            <BiSolidUpArrow
+              onClick={() => setDecrescentFilter(!decrescentFilter)}
+            />
+          )
+        }
+        onClick={changeIdx}
+      />
+      <Button label="OK" />
+    </div>
+  );
 }
