@@ -35,6 +35,16 @@
     font-weight: 600;
 }
 
+.button.disabled {
+    background-color: var(--backgroundGray);
+    color: #fff;
+    font-weight: 600;
+}
+.button.disabled:hover {
+    scale: 1;
+    cursor: not-allowed;
+}
+
 .button span {
     font-size: 20px;
 }

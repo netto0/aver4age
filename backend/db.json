@@ -2,13 +2,13 @@
   "subjects": [
     {
       "name": "LÓGICA",
-      "semester": 1,
-      "ava1": 2.25,
+      "semester": "1",
+      "ava1": "3",
       "ava2": 1.625,
       "ava3": 1.5,
       "ava4": 2.25,
-      "pim": 7,
-      "exam": 7,
+      "pim": "0",
+      "exam": "0",
       "summerSchoolGrade": null,
       "id": 2
     },
@@ -54,23 +54,11 @@
       "ava1": "3",
       "ava2": 2.25,
       "ava3": "1",
-      "ava4": 2.25,
+      "ava4": "",
       "pim": 8,
       "exam": 8,
       "summerSchoolGrade": null,
       "id": 6
-    },
-    {
-      "name": "TESTE",
-      "semester": "2",
-      "ava1": "",
-      "ava2": "",
-      "ava3": "",
-      "ava4": "",
-      "pim": "",
-      "exam": "",
-      "summerSchoolGrade": "",
-      "id": 7
     }
   ]
 }

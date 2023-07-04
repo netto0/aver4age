@@ -1,8 +1,9 @@
 .listboxContainer {
     background-color: var(--scndBgGray);
     width: 100%;
+    min-width: 900px;
     height: 100%;
-    max-height: 578px;
+    /* max-height: 663px; */
     border-radius: var(--defaultCurve);
     padding: 0 1rem;
     overflow-y: scroll;
@@ -66,18 +67,39 @@ td:first-child { border-bottom-left-radius: var(--defaultCurve); }
 td:last-child { border-top-right-radius: var(--defaultCurve); }
 td:last-child { border-bottom-right-radius: var(--defaultCurve); }
 
-.average {
+.tableRow .withCircle {
     position: relative;
-    min-width: 83px;
-    width: 83px;
+    min-width: 60px;
+    width: 60px;
+    padding: 0;
 }
 
-.redCircle {
+td {
+    /* border: 1px solid; */
+    padding: 0;
+    /* width: 100px; */
+}
+
+.indicatorCircle:hover {
+    cursor: help;
+}
+
+.indicatorCircle.red {
     background-color: var(--red);
     width: 10px;
     height: 10px;
     border-radius: 50%;
     position: absolute;
     top: 20%;
-    right: 15%;
+    right: 0;
+}
+
+.indicatorCircle.yellow {
+    background-color: var(--yellow);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 20%;
+    right: 0;
 }

@@ -1,9 +1,22 @@
 .averagesContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 10rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px calc(100% - 50px - 1rem);
+    grid-gap: 1rem;
     padding: 1.5rem 0;
-    gap: 1rem;
+    background-color: #fff;
+    height: 100%;
+    max-height: calc(100vh - 140px);
+}
+
+.listMenuSubcontainer {
+    width: 90%;
+    justify-self: center;
+}
+
+.listBoxSubcontainer {
+    width: 90%;
+    justify-self: center;
+    margin: 0 1rem;
 }
