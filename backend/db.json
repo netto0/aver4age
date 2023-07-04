@@ -1,30 +1,6 @@
 {
   "subjects": [
     {
-      "name": "LÓGICA",
-      "semester": "1",
-      "ava1": "3",
-      "ava2": 1.625,
-      "ava3": 1.5,
-      "ava4": 2.25,
-      "pim": "0",
-      "exam": "0",
-      "summerSchoolGrade": null,
-      "id": 2
-    },
-    {
-      "id": 3,
-      "name": "ESTATÍSTICA",
-      "semester": 1,
-      "ava1": 2,
-      "ava2": 1.75,
-      "ava3": 2.25,
-      "ava4": 1.5,
-      "pim": 7,
-      "exam": 10,
-      "summerSchoolGrade": null
-    },
-    {
       "id": 4,
       "name": "DESENVOLVIMENTO SUSTENTÁVEL",
       "semester": 1,
@@ -37,28 +13,64 @@
       "summerSchoolGrade": 9
     },
     {
-      "id": 5,
-      "name": "ORGANIZAÇÃO DE COMPUTADORES",
-      "semester": 1,
-      "ava1": 2.25,
-      "ava2": 2.5,
-      "ava3": 2,
-      "ava4": 1.75,
-      "pim": 8,
-      "exam": 3,
-      "summerSchoolGrade": 8
+      "name": "TESTE",
+      "semester": "1",
+      "ava1": "1",
+      "ava2": "2",
+      "ava3": "3",
+      "ava4": "4",
+      "pim": "2",
+      "exam": "1",
+      "summerSchoolGrade": "",
+      "id": 5
     },
     {
-      "name": "PRINCÍPIOS DE SISTEMAS DE INFORMAÇÃO",
-      "semester": 1,
-      "ava1": "3",
-      "ava2": 2.25,
-      "ava3": "1",
+      "name": "TESTE3",
+      "semester": "11",
+      "ava1": "",
+      "ava2": "",
+      "ava3": "",
       "ava4": "",
-      "pim": 8,
-      "exam": 8,
-      "summerSchoolGrade": null,
+      "pim": "",
+      "exam": "",
+      "summerSchoolGrade": "",
       "id": 6
+    },
+    {
+      "name": "AAAA",
+      "semester": "2",
+      "ava1": "",
+      "ava2": "",
+      "ava3": "",
+      "ava4": "",
+      "pim": "",
+      "exam": "",
+      "summerSchoolGrade": "",
+      "id": 7
+    },
+    {
+      "name": "BBB",
+      "semester": "3",
+      "ava1": "",
+      "ava2": "",
+      "ava3": "",
+      "ava4": "",
+      "pim": "",
+      "exam": "",
+      "summerSchoolGrade": "",
+      "id": 8
+    },
+    {
+      "name": "TESTE232222",
+      "semester": "1",
+      "ava1": "5",
+      "ava2": "0",
+      "ava3": "2",
+      "ava4": "5",
+      "pim": "10",
+      "exam": "10",
+      "summerSchoolGrade": "",
+      "id": 9
     }
   ]
 }

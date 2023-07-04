@@ -1,8 +1,10 @@
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./ListBox.module.css";
 import { getSubject } from "../../../api/Subjects";
-import React, { useCallback, useEffect, useState } from "react";
 import { GlobalSettingsContext } from "../../../providers/globalSettings";
-import EditSubjectBox from "../EditSubjectBox/EditSubjectBox";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import DeleteSubjectBox from "../SubjectBoxes/DeleteSubjectBox";
+import AddOrEditSubjectBox from "../SubjectBoxes/AddOrEditSubjectBox";
 
 export default function ListBox() {
   const { formData, setFormData, getData, setModalActive, subjects } =
@@ -20,13 +22,13 @@ export default function ListBox() {
   }
 
   function getSum(array) {
-    let sumResult = 0.00
-    const incomplete = array.includes("")
+    let sumResult = 0.0;
+    const incomplete = array.includes("");
     array.forEach((item) => {
-      if(item !== "") {
-        sumResult += parseFloat(item)
+      if (item !== "") {
+        sumResult += parseFloat(item);
       }
-    })
+    });
     return [sumResult.toFixed(2), incomplete];
   }
 
@@ -38,7 +40,8 @@ export default function ListBox() {
       return finalAverage > 5 ? "Aprovado" : "Reprovado";
     } else if (average > 7) {
       return "Aprovado";
-  }}
+    }
+  }
 
   const getSingleSubject = useCallback(async (id) => {
     const response = await getSubject(id);
@@ -50,7 +53,14 @@ export default function ListBox() {
   const openEditPage = (e) => {
     const rowID = e.target.parentElement.id;
     getSingleSubject(rowID);
-    setModalActive(<EditSubjectBox />);
+    setModalActive(<AddOrEditSubjectBox windowType="edit" />);
+  };
+  
+  const openDeletePage = (e) => {
+    const rowID = e.target.parentElement.parentElement.parentElement.id;
+    console.log(rowID)
+    getSingleSubject(rowID);
+    setModalActive(<DeleteSubjectBox />);
   };
 
   useEffect(() => {
@@ -84,27 +94,25 @@ export default function ListBox() {
                 key={id}
                 className={styles.tableRow}
                 id={id}
-                onClick={(e) => openEditPage(e)}
               >
-                <td>{subject.semester}</td>
-                <td className={styles.subjectName}>{subject.name}</td>
-                <td className={styles.withCircle}>
+                <td onClick={(e) => openEditPage(e)}>{subject.semester}</td>
+                <td onClick={(e) => openEditPage(e)} className={styles.subjectName}>{subject.name}</td>
+                <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
                   {avaSum[0]}
-                  {
-                    avaSum[1] &&
+                  {avaSum[1] && (
                     <div
                       className={`${styles.indicatorCircle} ${styles.yellow}`}
                       title="Há notas não lançadas"
                     />
-                  }
+                  )}
                 </td>
-                <td>
+                <td onClick={(e) => openEditPage(e)}>
                   {subject.pim ? parseFloat(subject.pim).toFixed(2) : "-"}
                 </td>
-                <td>
+                <td onClick={(e) => openEditPage(e)}>
                   {subject.exam ? parseFloat(subject.exam).toFixed(2) : "-"}
                 </td>
-                <td className={styles.withCircle}>
+                <td onClick={(e) => openEditPage(e)} className={styles.withCircle}>
                   {average}
                   {average < 7 && (
                     <div
@@ -113,13 +121,22 @@ export default function ListBox() {
                     />
                   )}
                 </td>
-                <td>{average < 7 ? (10 - average).toFixed(2) : "-"}</td>
-                <td>
+                <td onClick={(e) => openEditPage(e)}>{average < 7 ? (10 - average).toFixed(2) : "-"}</td>
+                <td onClick={(e) => openEditPage(e)}>
                   {subject.summerSchoolGrade
                     ? subject.summerSchoolGrade.toFixed(2)
                     : "-"}
                 </td>
-                <td>{getSituation(average, subject.summerSchoolGrade, avaSum[1])}</td>
+                <td onClick={(e) => openEditPage(e)}>
+                  {getSituation(average, subject.summerSchoolGrade, avaSum[1])}
+                </td>
+                <td className={styles.closeButtonContainer}>
+                  <div className={styles.closeButtonBox}>
+                    <div className={styles.closeButtonHover} onClick={(e) => openDeletePage(e)}/>
+                    <IoMdCloseCircleOutline 
+                    />
+                  </div>
+                </td>
               </tr>
             );
           })}
