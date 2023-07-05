@@ -18,4 +18,5 @@ div.appHeader, div.appFooter {
 
 div.appContent {
     background-color: bisque;
+    position: relative;
 }

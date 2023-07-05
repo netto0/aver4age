@@ -9,6 +9,7 @@
     backdrop-filter: blur(3px);
     justify-content: center;
     align-items: center;
+    top: 0;
 }
 
 .modalContainer.active{

@@ -28,7 +28,7 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
 
   return (
     <div className={styles.listMenuContainer}>
-      {searchBarValue}
+      {/* {searchBarValue} */}
       <Button
         label={<BiPlus />}
         onClick={() => setModalActive(<AddOrEditSubjectBox windowType="add" />)}
@@ -40,7 +40,7 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
         align="left"
         onChange={(e) => searchBarHandleChange(e)}
       />
-      <Button
+      {/* <Button
         label={filterItem[currentIdx]}
         icon={
           decrescentFilter ? (
@@ -54,7 +54,7 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
           )
         }
         onClick={changeIdx}
-      />
+      /> */}
       <Button label="OK" />
     </div>
   );

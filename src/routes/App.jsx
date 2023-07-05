@@ -1,10 +1,11 @@
 import React from "react";
-import Header from "./components/structure/Header";
-import Footer from "./components/structure/Footer";
+import Header from "../components/structure/Header";
+import Footer from "../components/structure/Footer";
 import styles from "./App.module.css";
-import Averages from "./components/pages/Averages/Averages";
-import Modal from "./components/elements/Modal";
-import { GlobalSettingsContext } from "./providers/globalSettings";
+import Modal from "../components/elements/Modal";
+import { GlobalSettingsContext } from "../providers/globalSettings";
+import { Outlet } from "react-router-dom";
+
 
 function App() {
   const { modalActive } = React.useContext(GlobalSettingsContext);
@@ -15,8 +16,8 @@ function App() {
         <Header />
       </div>
       <div className={styles.appContent}>
+        <Outlet />
         <Modal>{modalActive}</Modal>
-        <Averages />
       </div>
       <div className={styles.appFooter}>
         <Footer />
