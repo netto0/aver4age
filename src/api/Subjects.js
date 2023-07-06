@@ -20,26 +20,34 @@ async function deleteSubject(id) {
 async function addSubject(
   name,
   semester,
-  ava1 = null,
-  ava2 = null,
-  ava3 = null,
-  ava4 = null,
-  pim = null,
-  exam = null,
-  summerGrade = null
+  ava1,
+  ava2,
+  ava3,
+  ava4,
+  sum,
+  pim,
+  exam,
+  average,
+  need,
+  summerSchoolGrade,
+  finalAverage
 ) {
-  const postBody = {
+  const reqBody = {
     name: name,
     semester: semester,
     ava1: ava1,
     ava2: ava2,
     ava3: ava3,
     ava4: ava4,
+    sum: sum,
     pim: pim,
     exam: exam,
-    summerSchoolGrade: summerGrade,
+    average: average,
+    need: need,
+    summerSchoolGrade: summerSchoolGrade,
+    finalAverage: finalAverage,
   };
-  const resp = await axios.post(`${baseUrl}/subjects`, postBody);
+  const resp = await axios.post(`${baseUrl}/subjects`, reqBody);
   return resp.data;
 }
 
@@ -51,9 +59,13 @@ async function editSubject(
   ava2,
   ava3,
   ava4,
+  sum,
   pim,
   exam,
-  summerGrade
+  average,
+  need,
+  summerSchoolGrade,
+  finalAverage
 ) {
   const reqBody = {
     name: name,
@@ -62,9 +74,13 @@ async function editSubject(
     ava2: ava2,
     ava3: ava3,
     ava4: ava4,
+    sum: sum,
     pim: pim,
     exam: exam,
-    summerSchoolGrade: summerGrade,
+    average: average,
+    need: need,
+    summerSchoolGrade: summerSchoolGrade,
+    finalAverage: finalAverage,
   };
   const resp = await axios.put(`${baseUrl}/subjects/${id}`, reqBody);
   return resp.data;

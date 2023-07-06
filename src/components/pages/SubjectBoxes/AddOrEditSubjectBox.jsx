@@ -11,6 +11,38 @@ export default function AddOrEditSubjectBox({ windowType }) {
     GlobalSettingsContext
   );
   const [validForm, setValidForm] = useState(false);
+  const getSum = (array) => {
+    let sumResult = 0.0;
+    array.forEach((item) => {
+      if (item !== "") {
+        sumResult += parseFloat(item);
+      }
+    });
+    return sumResult.toFixed(2);
+  };
+
+  const getAverage = (ava, pim, exam) => {
+    if (ava && pim && exam) {
+      return (
+        (parseFloat(ava) + 2 * parseFloat(pim) + 7 * parseFloat(exam)) /
+        10
+      ).toFixed(2);
+    } else {
+      return "-";
+    }
+  };
+
+  const getSituation = (average, exam, incomplete) => {
+    if (incomplete) {
+      // console.log("aaaa")
+      return "Pendente";
+    } else if (average < 7) {
+      const finalAverage = (parseFloat(average) + parseFloat(exam)) / 2;
+      return finalAverage > 5 ? "Aprovado" : "Reprovado";
+    } else if (average > 7) {
+      return "Aprovado";
+    }
+  };
 
   const handleChange = (e, key) => {
     let targetMin = e.target.min;
@@ -44,15 +76,25 @@ export default function AddOrEditSubjectBox({ windowType }) {
       ava2: "",
       ava3: "",
       ava4: "",
+      sum: "",
       pim: "",
       exam: "",
+      average: "",
+      need: "",
       summerSchoolGrade: "",
+      finalAverage: "",
+      situation: "",
     });
     setModalActive(null);
   };
 
   const handleSubmit = async (
     e,
+    sum,
+    average,
+    need,
+    finalAverage,
+    situation,
     { name, semester, ava1, ava2, ava3, ava4, pim, exam, summerSchoolGrade, id }
   ) => {
     e.preventDefault();
@@ -64,9 +106,14 @@ export default function AddOrEditSubjectBox({ windowType }) {
         ava2,
         ava3,
         ava4,
+        sum,
         pim,
         exam,
-        summerSchoolGrade
+        average,
+        need,
+        summerSchoolGrade,
+        finalAverage,
+        situation
       );
       if (res) {
         getData();
@@ -80,9 +127,14 @@ export default function AddOrEditSubjectBox({ windowType }) {
         ava2,
         ava3,
         ava4,
+        sum,
         pim,
         exam,
-        summerSchoolGrade
+        average,
+        need,
+        summerSchoolGrade,
+        finalAverage,
+        situation
       );
       if (res) {
         getData();
@@ -91,10 +143,32 @@ export default function AddOrEditSubjectBox({ windowType }) {
     closeScreen();
   };
 
+  const avaArray = [formData.ava1, formData.ava2, formData.ava3, formData.ava4];
+  const avaSum = getSum(avaArray);
+  const average = getAverage(avaSum, formData.pim, formData.exam);
+  const need = average < 7 ? (10 - average).toFixed(2) : "";
+  const finalAverage = [average, formData.summerSchoolGrade].includes("")
+    ? "-"
+    : (parseFloat(average) + parseFloat(formData.summerSchoolGrade)) / 2;
+  const situation = getSituation(average, formData.exam, [...avaArray, formData.pim, formData.exam,formData.average,formData.need,formData.summerSchoolGrade,formData.finalAverage].includes(""));
+
   return (
     <div className={styles.addSubjectContainer}>
-      {JSON.stringify(formData)}
-      <form onSubmit={(e) => handleSubmit(e, formData)}>
+      {[...avaArray, formData.pim, formData.exam,formData.average,formData.need,formData.summerSchoolGrade,formData.finalAverage].includes("") ? "true" : "false"}
+      {/* {JSON.stringify(formData)} */}
+      <form
+        onSubmit={(e) =>
+          handleSubmit(
+            e,
+            avaSum,
+            average,
+            need,
+            finalAverage,
+            situation,
+            formData
+          )
+        }
+      >
         <IoMdCloseCircleOutline onClick={closeScreen} />
         <legend>
           {windowType === "add" ? "Adicionar Matéria" : "Editar Matéria"}
@@ -105,6 +179,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
           type="text"
           placeholder="Nome da Matéria"
           value={formData.name}
+          autoFocus={true}
           onChange={(e) => handleChange(e, "name")}
         />
         <Input
@@ -123,6 +198,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
             label="AVA I"
             min={0}
             max={5}
+            step="0.01"
             type="number"
             placeholder="Questionário I AVA"
             value={formData.ava1}
@@ -133,6 +209,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
             label="AVA II"
             min={0}
             max={5}
+            step="0.01"
             type="number"
             placeholder="Questionário II AVA"
             value={formData.ava2}
@@ -145,6 +222,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
             label="AVA III"
             min={0}
             max={5}
+            step="0.01"
             type="number"
             placeholder="Questionário III AVA"
             value={formData.ava3}
@@ -155,6 +233,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
             label="AVA IV"
             min={0}
             max={5}
+            step="0.01"
             type="number"
             placeholder="Questionário IV AVA"
             value={formData.ava4}
@@ -171,16 +250,28 @@ export default function AddOrEditSubjectBox({ windowType }) {
           value={formData.pim}
           onChange={(e) => handleChange(e, "pim")}
         />
-        <Input
-          name="exam"
-          label="Prova"
-          min={0}
-          max={10}
-          type="number"
-          placeholder="Prova"
-          value={formData.exam}
-          onChange={(e) => handleChange(e, "exam")}
-        />
+        <div className={styles.double}>
+          <Input
+            name="exam"
+            label="Prova"
+            min={0}
+            max={10}
+            type="number"
+            placeholder="Prova"
+            value={formData.exam}
+            onChange={(e) => handleChange(e, "exam")}
+          />
+          <Input
+            name="summerSchool"
+            label="Exame"
+            min={0}
+            max={10}
+            type="number"
+            placeholder="Exame"
+            value={formData.summerSchoolGrade}
+            onChange={(e) => handleChange(e, "summerSchoolGrade")}
+          />
+        </div>
         <div className={styles.double}>
           <Button
             label="Cancelar"

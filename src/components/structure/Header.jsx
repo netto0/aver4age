@@ -19,7 +19,6 @@ export default function Header() {
         }}
         to="/"
       >
-        {" "}
         INÍCIO
       </NavLink>
       <NavLink
@@ -31,7 +30,6 @@ export default function Header() {
         }}
         to="/averages"
       >
-        {" "}
         MÉDIAS
       </NavLink>
       <NavLink
@@ -43,7 +41,6 @@ export default function Header() {
         }}
         to="/settings"
       >
-        {" "}
         CONFIGURAÇÕES
       </NavLink>
       <NavLink
@@ -55,7 +52,6 @@ export default function Header() {
         }}
         to="/profile"
       >
-        {" "}
         PERFIL
       </NavLink>
     </header>

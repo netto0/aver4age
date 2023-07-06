@@ -28,6 +28,8 @@
 
 .subjectName {
     text-align: left;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 .listboxContainer table {
@@ -36,15 +38,22 @@
     border-spacing:0 10px;
 }
 
-.listboxContainer th {
-    padding: .3rem 0;
-    position: sticky;
-    top: 0rem;
+thead {
     background-color: var(--scndBgGray);
+    /* background-color: red; */
+    width: 120%;
+    height: 40px;
+    position: sticky;
+    white-space: nowrap;
+    top: 0rem;
+    z-index: 3;
+}
+
+.listboxContainer th {
     font-weight: 400;
     color: var(--darkGray);
-    font-size: 20px;
-    z-index: 3;
+    font-size: 18px;
+    text-align: center;
 }
 
 .tableRow {
@@ -70,15 +79,22 @@ td:last-child { border-bottom-right-radius: var(--defaultCurve); }
 
 .tableRow .withCircle {
     position: relative;
-    min-width: 60px;
-    width: 60px;
+    
+    /* width: 60px; */
     padding: 0;
 }
+
 
 td {
     /* border: 1px solid; */
     padding: 0;
     /* width: 100px; */
+}
+
+td.defaultWidth {
+    width: 120px;
+    min-width: 60px;
+    max-width: 150px;
 }
 
 .indicatorCircle:hover {
@@ -92,7 +108,7 @@ td {
     border-radius: 50%;
     position: absolute;
     top: 20%;
-    right: 0;
+    right: calc(50% - 30px);
 }
 
 .indicatorCircle.yellow {
@@ -102,14 +118,13 @@ td {
     border-radius: 50%;
     position: absolute;
     top: 20%;
-    right: 0;
+    right: calc(50% - 30px);
 }
 
 .closeButtonContainer {
-    /* border: 1px solid; */
     position: relative;
-    width: 25px;
-    /* background-color: aqua; */
+    width: 20px;
+    min-width: 20px;
 }
 
 .closeButtonBox {

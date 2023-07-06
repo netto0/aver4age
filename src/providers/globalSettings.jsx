@@ -6,6 +6,8 @@ export const GlobalSettingsContext = React.createContext({});
 export const GlobalSettingsProvider = (props) => {
   const [subjects, setSubjects] = useState([]);
   const [modalActive, setModalActive] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(["id", true])
+  // descending
   const [formData, setFormData] = useState({
     name: "",
     semester: "",
@@ -13,9 +15,14 @@ export const GlobalSettingsProvider = (props) => {
     ava2: "",
     ava3: "",
     ava4: "",
+    sum: "",
     pim: "",
     exam: "",
+    average: "",
+    need: "",
     summerSchoolGrade: "",
+    finalAverage: "",
+    situation:""
   });
   const [searchBarValue, setSearchBarValue] = useState("");
 
@@ -34,7 +41,9 @@ export const GlobalSettingsProvider = (props) => {
         subjects,
         getData,
         searchBarValue,
-        setSearchBarValue
+        setSearchBarValue,
+        activeFilter,
+        setActiveFilter
       }}
     >
       {props.children}

@@ -1,28 +1,52 @@
 {
   "subjects": [
     {
-      "id": 4,
       "name": "DESENVOLVIMENTO SUSTENTÁVEL",
-      "semester": 1,
-      "ava1": 1.75,
-      "ava2": 1.25,
-      "ava3": 2.25,
-      "ava4": 2.25,
-      "pim": 7,
-      "exam": 5,
-      "summerSchoolGrade": 9
-    },
-    {
-      "name": "TESTE",
       "semester": "1",
       "ava1": "1",
-      "ava2": "2",
-      "ava3": "3",
-      "ava4": "4",
-      "pim": "2",
+      "ava2": "1",
+      "ava3": "2",
+      "ava4": "2",
+      "sum": "6.00",
+      "pim": "7",
+      "exam": "5",
+      "average": "5.50",
+      "need": "4.50",
+      "summerSchoolGrade": "9",
+      "finalAverage": 7.25,
+      "id": 1
+    },
+    {
+      "name": "MATERIA TESTE",
+      "semester": "2",
+      "ava1": "4",
+      "ava2": "1",
+      "ava3": "1",
+      "ava4": "2",
+      "sum": "8.00",
+      "pim": "8",
+      "exam": "3",
+      "average": "4.50",
+      "need": "5.50",
+      "summerSchoolGrade": "3",
+      "finalAverage": 3.75,
+      "id": 2
+    },
+    {
+      "name": "OUTRA",
+      "semester": "12",
+      "ava1": "0.8",
+      "ava2": "1",
+      "ava3": ".3",
+      "ava4": "",
+      "sum": "2.10",
+      "pim": "10",
       "exam": "1",
-      "summerSchoolGrade": "",
-      "id": 5
+      "average": "2.91",
+      "need": "7.09",
+      "summerSchoolGrade": "10",
+      "finalAverage": 6.455,
+      "id": 3
     }
   ]
 }
