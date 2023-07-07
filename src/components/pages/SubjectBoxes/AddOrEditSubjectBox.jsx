@@ -10,92 +10,198 @@ export default function AddOrEditSubjectBox({ windowType }) {
   const { formData, setFormData, getData, setModalActive } = React.useContext(
     GlobalSettingsContext
   );
+
   const [validForm, setValidForm] = useState(false);
-  const getSum = (array) => {
-    let sumResult = 0.0;
-    array.forEach((item) => {
-      if (item !== "") {
-        sumResult += parseFloat(item);
-      }
-    });
-    return sumResult.toFixed(2);
-  };
-
-  const getAverage = (ava, pim, exam) => {
-    if (ava && pim && exam) {
-      return (
-        (parseFloat(ava) + 2 * parseFloat(pim) + 7 * parseFloat(exam)) /
-        10
-      ).toFixed(2);
-    } else {
-      return "-";
-    }
-  };
-
-  const getSituation = (average, exam, incomplete) => {
-    if (incomplete) {
-      // console.log("aaaa")
-      return "Pendente";
-    } else if (average < 7) {
-      const finalAverage = (parseFloat(average) + parseFloat(exam)) / 2;
-      return finalAverage > 5 ? "Aprovado" : "Reprovado";
-    } else if (average > 7) {
-      return "Aprovado";
-    }
-  };
+  const avaArray = [formData.ava1, formData.ava2, formData.ava3, formData.ava4];
 
   const handleChange = (e, key) => {
-    let targetMin = e.target.min;
-    let targetMax = e.target.max;
-
-    if (targetMin !== "") {
-      if (parseFloat(e.target.value) < parseFloat(targetMin)) {
-        e.target.value = targetMin;
+    const targetMin = parseFloat(e.target.min);
+    const targetMax = parseFloat(e.target.max);
+    if (e.target.type === "text") {
+      setFormData({ ...formData, [key]: e.target.value.toUpperCase() });
+    } else {
+      if (e.target.value === "") {
+        e.target.value = null;
+      } else {
+        if (parseFloat(e.target.value) >= targetMax) {
+          e.target.value = targetMax;
+        }
+        if (parseFloat(e.target.value) <= targetMin) {
+          e.target.value = targetMin;
+        }
       }
-      if (parseFloat(e.target.value) > parseFloat(targetMax)) {
-        e.target.value = targetMax;
-      }
+      setFormData({ ...formData, [key]: e.target.value });
     }
-
-    setFormData({ ...formData, [key]: e.target.value.toUpperCase() });
   };
 
+  const getSum = (array) => {
+    let sumResult = 0;
+    array.forEach((item) => {
+      if (item !== "") {
+        sumResult += Number(item);
+      } else {
+        sumResult += 0;
+      }
+    });
+    return Number(sumResult).toFixed(2);
+  };
+
+  const getAverage = (formData) => {
+    if (
+      [
+        formData.ava1,
+        formData.ava2,
+        formData.ava3,
+        formData.ava4,
+        formData.pim,
+        formData.exam,
+      ].includes("")
+    ) {
+      return "";
+    } else {
+      const result =
+        (parseFloat(formData.sum) +
+          2 * parseFloat(formData.pim) +
+          7 * parseFloat(formData.exam)) /
+        10;
+      return (parseFloat(Number(result)).toFixed(2)).toString();
+    }
+  };
+
+  const getNeeded = (average) => {
+    try {
+      if (average < 7) {
+        return (10 - parseFloat(average)).toFixed(2).toString();
+      } else {
+        return "";
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getFinalAverage = (average, summerSchoolGrade) => {
+    if ([average, summerSchoolGrade].includes("")) {
+      return "";
+    } else {
+      return ((parseFloat(average) + parseFloat(summerSchoolGrade)) / 2).toFixed(2).toString();
+    }
+  };
+
+  const getSituation = (formData) => {
+    // console.log("situation")
+    const {
+      ava1,
+      ava2,
+      ava3,
+      ava4,
+      pim,
+      exam,
+      summerSchoolGrade,
+      average,
+      finalAverage,
+    } = formData;
+
+    if ([ava1, ava2, ava3, ava4, pim, exam].includes("")) {
+      return "Pendente";
+    } else if (average !== "" && parseFloat(average) < 7) {
+      if ([ava1, ava2, ava3, ava4, pim, exam, summerSchoolGrade].includes("")) {
+        return "Pendente";
+      } else {
+        if (finalAverage && parseFloat(finalAverage) >= 5) {
+          return "Aprovado";
+        } else {
+          return "Reprovado";
+        }
+      }
+    } else if (average !== "" && parseFloat(average) >= 7) {
+      return "Aprovado";
+    } else {
+      return "Nao tratado";
+    }
+  };
+
+  // Define se o formulário é válido
   useEffect(() => {
-    if (formData.name !== "" && formData.semester !== "") {
+    if (formData.name !== null && formData.semester !== null) {
       setValidForm(true);
     } else {
       setValidForm(false);
     }
   }, [formData]);
 
+  // Altera a soma no form em tempo real
+  useEffect(() => {
+    setFormData({ ...formData, sum: getSum(avaArray) });
+  }, avaArray);
+
+  // Altera a média no form em tempo real
+  useEffect(() => {
+    // console.log("mudei");
+    setFormData({
+      ...formData,
+      average: getAverage(formData),
+      situation: getSituation(formData),
+    });
+  }, [
+    formData.sum,
+    formData.pim,
+    formData.exam,
+    formData.summerSchoolGrade,
+    formData.finalAverage,
+  ]);
+
+  // Altera a nota necessária no form em tempo real
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      need: getNeeded(formData.average),
+      finalAverage: getFinalAverage(
+        formData.average,
+        formData.summerSchoolGrade
+      ),
+    });
+  }, [formData.average, formData.summerSchoolGrade]);
+
   const closeScreen = () => {
     setFormData({
-      name: "",
-      semester: "",
-      ava1: "",
-      ava2: "",
-      ava3: "",
-      ava4: "",
-      sum: "",
-      pim: "",
-      exam: "",
-      average: "",
-      need: "",
-      summerSchoolGrade: "",
-      finalAverage: "",
-      situation: "",
+      name: null,
+      semester: null,
+      ava1: null,
+      ava2: null,
+      ava3: null,
+      ava4: null,
+      sum: null,
+      pim: null,
+      exam: null,
+      average: null,
+      need: null,
+      summerSchoolGrade: null,
+      finalAverage: null,
+      situation: null,
     });
     setModalActive(null);
   };
 
   const handleSubmit = async (
     e,
-    sum,
-    average,
-    need,
-    finalAverage,
-    situation,
-    { name, semester, ava1, ava2, ava3, ava4, pim, exam, summerSchoolGrade, id }
+    {
+      name,
+      semester,
+      ava1,
+      ava2,
+      ava3,
+      ava4,
+      sum,
+      pim,
+      exam,
+      average,
+      need,
+      summerSchoolGrade,
+      finalAverage,
+      situation,
+      id,
+    }
   ) => {
     e.preventDefault();
     if (windowType === "add") {
@@ -143,32 +249,14 @@ export default function AddOrEditSubjectBox({ windowType }) {
     closeScreen();
   };
 
-  const avaArray = [formData.ava1, formData.ava2, formData.ava3, formData.ava4];
-  const avaSum = getSum(avaArray);
-  const average = getAverage(avaSum, formData.pim, formData.exam);
-  const need = average < 7 ? (10 - average).toFixed(2) : "";
-  const finalAverage = [average, formData.summerSchoolGrade].includes("")
-    ? "-"
-    : (parseFloat(average) + parseFloat(formData.summerSchoolGrade)) / 2;
-  const situation = getSituation(average, formData.exam, [...avaArray, formData.pim, formData.exam,formData.average,formData.need,formData.summerSchoolGrade,formData.finalAverage].includes(""));
-
   return (
     <div className={styles.addSubjectContainer}>
-      {[...avaArray, formData.pim, formData.exam,formData.average,formData.need,formData.summerSchoolGrade,formData.finalAverage].includes("") ? "true" : "false"}
       {/* {JSON.stringify(formData)} */}
-      <form
-        onSubmit={(e) =>
-          handleSubmit(
-            e,
-            avaSum,
-            average,
-            need,
-            finalAverage,
-            situation,
-            formData
-          )
-        }
-      >
+      {/* {`Soma:${formData.sum} | Pim:${formData.pim} | Prova:${formData.exam} | Média:${formData.average} | Neces.:${formData.need} | MF: ${formData.finalAverage} | ${formData.situation}`}
+      <br />
+      <br />
+      {`AVA1: ${formData.ava1} | AVA2: ${formData.ava2} | AVA3: ${formData.ava3} | AVA4: ${formData.ava4}`} */}
+      <form onSubmit={(e) => handleSubmit(e, formData)}>
         <IoMdCloseCircleOutline onClick={closeScreen} />
         <legend>
           {windowType === "add" ? "Adicionar Matéria" : "Editar Matéria"}

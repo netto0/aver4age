@@ -40,13 +40,13 @@
 
 thead {
     background-color: var(--scndBgGray);
-    /* background-color: red; */
     width: 120%;
     height: 40px;
     position: sticky;
     white-space: nowrap;
     top: 0rem;
     z-index: 3;
+    user-select: none;
 }
 
 .listboxContainer th {

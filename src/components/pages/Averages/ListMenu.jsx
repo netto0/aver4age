@@ -40,21 +40,6 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
         align="left"
         onChange={(e) => searchBarHandleChange(e)}
       />
-      {/* <Button
-        label={filterItem[currentIdx]}
-        icon={
-          decrescentFilter ? (
-            <BiSolidDownArrow
-              onClick={() => setDecrescentFilter(!decrescentFilter)}
-            />
-          ) : (
-            <BiSolidUpArrow
-              onClick={() => setDecrescentFilter(!decrescentFilter)}
-            />
-          )
-        }
-        onClick={changeIdx}
-      /> */}
       <Button label="OK" />
     </div>
   );

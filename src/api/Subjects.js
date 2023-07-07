@@ -30,7 +30,8 @@ async function addSubject(
   average,
   need,
   summerSchoolGrade,
-  finalAverage
+  finalAverage,
+  situation
 ) {
   const reqBody = {
     name: name,
@@ -46,6 +47,7 @@ async function addSubject(
     need: need,
     summerSchoolGrade: summerSchoolGrade,
     finalAverage: finalAverage,
+    situation: situation
   };
   const resp = await axios.post(`${baseUrl}/subjects`, reqBody);
   return resp.data;
@@ -65,7 +67,8 @@ async function editSubject(
   average,
   need,
   summerSchoolGrade,
-  finalAverage
+  finalAverage,
+  situation
 ) {
   const reqBody = {
     name: name,
@@ -81,6 +84,7 @@ async function editSubject(
     need: need,
     summerSchoolGrade: summerSchoolGrade,
     finalAverage: finalAverage,
+    situation: situation
   };
   const resp = await axios.put(`${baseUrl}/subjects/${id}`, reqBody);
   return resp.data;

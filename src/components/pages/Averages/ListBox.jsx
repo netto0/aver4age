@@ -19,39 +19,6 @@ export default function ListBox() {
     setActiveFilter,
   } = React.useContext(GlobalSettingsContext);
 
-  function getAverage(ava, pim, exam) {
-    if (ava && pim && exam) {
-      return (
-        (parseFloat(ava) + 2 * parseFloat(pim) + 7 * parseFloat(exam)) /
-        10
-      ).toFixed(2);
-    } else {
-      return "-";
-    }
-  }
-
-  function getSum(array) {
-    let sumResult = 0.0;
-    const incomplete = array.includes("");
-    array.forEach((item) => {
-      if (item !== "") {
-        sumResult += parseFloat(item);
-      }
-    });
-    return [sumResult.toFixed(2), incomplete];
-  }
-
-  function getSituation(average, exam, incomplete) {
-    if (incomplete) {
-      return "Pendente";
-    } else if (average < 7) {
-      const finalAverage = (parseFloat(average) + parseFloat(exam)) / 2;
-      return finalAverage > 5 ? "Aprovado" : "Reprovado";
-    } else if (average > 7) {
-      return "Aprovado";
-    }
-  }
-
   const changeFilter = (e) => {
     const id = e.target.id;
     if (activeFilter[0] !== id) {
@@ -63,14 +30,13 @@ export default function ListBox() {
         setActiveFilter([id, false]);
       }
     }
-
-    // console.log("CHANGE FILTER", e.target.id)
   };
 
   const getSingleSubject = useCallback(async (id) => {
     const response = await getSubject(id);
     if (response) {
-      setFormData({ ...formData, ...response });
+      setFormData({ ...response });
+      // setFormData({...formData});
     }
   }, []);
 
@@ -82,7 +48,6 @@ export default function ListBox() {
 
   const openDeletePage = (e) => {
     const rowID = e.target.parentElement.parentElement.parentElement.id;
-    console.log(rowID);
     getSingleSubject(rowID);
     setModalActive(<DeleteSubjectBox />);
   };
@@ -97,19 +62,17 @@ export default function ListBox() {
     } else {
       if (descending) {
         return [...array].sort((a, b) =>
-        a[key].toLowerCase() < b[key].toLowerCase() ? -1 : 1
+          a[key].toLowerCase() < b[key].toLowerCase() ? -1 : 1
         );
       } else {
         return [...array].sort((a, b) =>
-        a[key].toLowerCase() < b[key].toLowerCase() ? 1 : -1
+          a[key].toLowerCase() < b[key].toLowerCase() ? 1 : -1
         );
       }
     }
   };
 
-  // const ordenadoPorNome = orderBy(subjects, "semester");
-  const ordenadoPorNome = orderBy(subjects, activeFilter[0], true, activeFilter[1]);
-  // console.log(ordenadoPorNome);
+  const ordered = orderBy(subjects, activeFilter[0], true, activeFilter[1]);
 
   useEffect(() => {
     getData();
@@ -117,165 +80,154 @@ export default function ListBox() {
 
   return (
     <div className={styles.listboxContainer}>
-      {/* {JSON.stringify(ordenadoPorNome)} */}
-      {`${activeFilter[0]} | ${activeFilter[1]}`}
       <table>
         <thead>
           <tr>
             <th id="semester" onClick={(e) => changeFilter(e)}>
-              Semestre{" "}
-              {activeFilter[0] === "semester" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "semester" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Semestre
+              {activeFilter[0] === "semester" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="name" onClick={(e) => changeFilter(e)}>
-              Matéria{" "}
-              {activeFilter[0] === "name" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "name" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Matéria
+              {activeFilter[0] === "name" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="ava" onClick={(e) => changeFilter(e)}>
-              AVA{" "}
-              {activeFilter[0] === "ava" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "ava" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              AVA
+              {activeFilter[0] === "ava" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="pim" onClick={(e) => changeFilter(e)}>
-              PIM{" "}
-              {activeFilter[0] === "pim" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "pim" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              PIM
+              {activeFilter[0] === "pim" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="exam" onClick={(e) => changeFilter(e)}>
-              Prova{" "}
-              {activeFilter[0] === "exam" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "exam" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Prova
+              {activeFilter[0] === "exam" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="average" onClick={(e) => changeFilter(e)}>
-              Média{" "}
-              {activeFilter[0] === "average" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "average" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Média
+              {activeFilter[0] === "average" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="need" onClick={(e) => changeFilter(e)}>
-              Necessário{" "}
-              {activeFilter[0] === "need" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "need" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Necessário
+              {activeFilter[0] === "need" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="summerSchoolGrade" onClick={(e) => changeFilter(e)}>
-              Exame{" "}
-              {activeFilter[0] === "summerSchoolGrade" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "summerSchoolGrade" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Exame
+              {activeFilter[0] === "summerSchoolGrade" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="finalAverage" onClick={(e) => changeFilter(e)}>
-              MF{" "}
-              {activeFilter[0] === "summerSchoolGrade" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "summerSchoolGrade" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              MF
+              {activeFilter[0] === "finalAverage" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
+
             <th id="situation" onClick={(e) => changeFilter(e)}>
-              Situação{" "}
-              {activeFilter[0] === "situation" && activeFilter[1] && (
-                <LiaSortUpSolid />
-              )}
-              {activeFilter[0] === "situation" && !activeFilter[1] && (
-                <LiaSortDownSolid />
-              )}
+              Situação
+              {activeFilter[0] === "situation" &&
+                (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
             <th></th>
           </tr>
         </thead>
+
         <tbody>
-          {ordenadoPorNome.map((subject) => {
-            const { ava1, ava2, ava3, ava4, id } = subject;
-            const avaSum = getSum([ava1, ava2, ava3, ava4]);
-            const average = getAverage(avaSum, subject.pim, subject.exam);
+          {ordered.map((subject) => {
+            const avaGradePending = [
+              subject.ava1,
+              subject.ava2,
+              subject.ava3,
+              subject.ava4,
+            ].includes("", null)
+
             if (searchBarValue == "" || subject.name.includes(searchBarValue)) {
               return (
-                <tr key={id} className={styles.tableRow} id={id}>
-                  <td onClick={(e) => openEditPage(e)}>{subject.semester}</td>
+                <tr
+                  key={subject.id}
+                  className={styles.tableRow}
+                  id={subject.id}
+                >
+                  <td id="semester" onClick={(e) => openEditPage(e)}>
+                    {subject.semester}
+                  </td>
+
                   <td
+                    id="name"
                     onClick={(e) => openEditPage(e)}
                     className={styles.subjectName}
                   >
                     {subject.name}
                   </td>
+
                   <td
+                    id="ava"
                     onClick={(e) => openEditPage(e)}
                     className={`${styles.defaultWidth} ${styles.withCircle}`}
                   >
                     {subject.sum}
-                    {(subject.ava1 === "" ||
-                      subject.ava2 === "" ||
-                      subject.ava3 === "" ||
-                      subject.ava4 === "") && (
+                    {avaGradePending && (
                       <div
                         className={`${styles.indicatorCircle} ${styles.yellow}`}
                         title="Há notas não lançadas"
                       />
                     )}
                   </td>
+
                   <td
+                    id="pim"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
                     {subject.pim ? parseFloat(subject.pim).toFixed(2) : "-"}
                   </td>
+
                   <td
+                    id="exam"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
                     {subject.exam ? parseFloat(subject.exam).toFixed(2) : "-"}
                   </td>
+
                   <td
+                    id="average"
                     className={`${styles.defaultWidth} ${styles.withCircle}`}
                     onClick={(e) => openEditPage(e)}
                   >
-                    {subject.average}
-                    {subject.average < 7 && (
+                    {subject.average ? subject.average : "-"}
+                    {(subject.average < 7 && subject.average) && (
                       <div
                         className={`${styles.indicatorCircle} ${styles.red}`}
                         title="Média insuficiente"
                       />
                     )}
                   </td>
+
                   <td
+                    id="need"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
-                    {subject.average < 7 ? subject.need : "-"}
+                    {subject.need ? subject.need : "-"}
                   </td>
+
                   <td
+                    id="summerSchoolGrade"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
@@ -283,23 +235,24 @@ export default function ListBox() {
                       ? parseFloat(subject.summerSchoolGrade).toFixed(2)
                       : "-"}
                   </td>
+
                   <td
+                    id="finalAverage"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
-                    {subject.finalAverage}
+                    {subject.finalAverage || "-"}
                   </td>
+
                   <td
+                    id="situation"
                     className={`${styles.defaultWidth}`}
                     onClick={(e) => openEditPage(e)}
                   >
-                    {getSituation(
-                      average,
-                      subject.summerSchoolGrade,
-                      avaSum[1]
-                    )}
+                    {subject.situation}
                   </td>
-                  <td className={styles.closeButtonContainer}>
+
+                  <td id="closeButton" className={styles.closeButtonContainer}>
                     <div className={styles.closeButtonBox}>
                       <div
                         className={styles.closeButtonHover}
