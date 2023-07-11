@@ -1,19 +1,19 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://json-server-ten-pied.vercel.app/subjects";
 
 async function getSubjects() {
-  const resp = await axios.get(`${baseUrl}/subjects`);
+  const resp = await axios.get(baseUrl);
   return resp.data;
 }
 
 async function getSubject(id) {
-  const resp = await axios.get(`${baseUrl}/subjects/${id}`)
+  const resp = await axios.get(`${baseUrl}/${id}`)
   return resp.data;
 }
 
 async function deleteSubject(id) {
-  const resp = await axios.delete(`${baseUrl}/subjects/${id}`)
+  const resp = await axios.delete(`${baseUrl}/${id}`)
   return resp.data;
 }
 
