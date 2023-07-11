@@ -36,7 +36,6 @@ export default function ListBox() {
     const response = await getSubject(id);
     if (response) {
       setFormData({ ...response });
-      // setFormData({...formData});
     }
   }, []);
 
@@ -52,14 +51,8 @@ export default function ListBox() {
     setModalActive(<DeleteSubjectBox />);
   };
 
-  const orderBy = (array, key, isNumber = true, descending = false) => {
-    if (isNumber) {
-      if (descending) {
-        return [...array].sort((a, b) => a[key] - b[key]);
-      } else {
-        return [...array].sort((a, b) => b[key] - a[key]);
-      }
-    } else {
+  const orderBy = (array, key, descending = false) => {
+    if(["name", "situation"].includes(key)){
       if (descending) {
         return [...array].sort((a, b) =>
           a[key].toLowerCase() < b[key].toLowerCase() ? -1 : 1
@@ -69,10 +62,17 @@ export default function ListBox() {
           a[key].toLowerCase() < b[key].toLowerCase() ? 1 : -1
         );
       }
+    } else {
+      if (descending) {
+        return [...array].sort((a, b) => a[key] - b[key]);
+      } else {
+        return [...array].sort((a, b) => b[key] - a[key]);
+      }
     }
+    
   };
 
-  const ordered = orderBy(subjects, activeFilter[0], true, activeFilter[1]);
+  const ordered = orderBy(subjects, activeFilter[0], activeFilter[1]);
 
   useEffect(() => {
     getData();
@@ -80,6 +80,7 @@ export default function ListBox() {
 
   return (
     <div className={styles.listboxContainer}>
+      {/* {`${activeFilter[0]} | ${activeFilter[1] ? "Crescente" : "Decrescente"}`} */}
       <table>
         <thead>
           <tr>
@@ -95,9 +96,9 @@ export default function ListBox() {
                 (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
 
-            <th id="ava" onClick={(e) => changeFilter(e)}>
+            <th id="sum" onClick={(e) => changeFilter(e)}>
               AVA
-              {activeFilter[0] === "ava" &&
+              {activeFilter[0] === "sum" &&
                 (activeFilter[1] ? <LiaSortUpSolid /> : <LiaSortDownSolid />)}
             </th>
 
@@ -153,9 +154,16 @@ export default function ListBox() {
               subject.ava2,
               subject.ava3,
               subject.ava4,
-            ].includes("", null)
-
-            if (searchBarValue == "" || subject.name.includes(searchBarValue)) {
+            ].includes("", null);
+            if (
+              searchBarValue == "" ||
+              subject.name
+                .normalize("NFD")
+                .replace(/\p{Mn}/gu, "")
+                .includes(
+                  searchBarValue.normalize("NFD").replace(/\p{Mn}/gu, "")
+                )
+            ) {
               return (
                 <tr
                   key={subject.id}
@@ -168,6 +176,7 @@ export default function ListBox() {
 
                   <td
                     id="name"
+                    title={subject.name}
                     onClick={(e) => openEditPage(e)}
                     className={styles.subjectName}
                   >
@@ -179,7 +188,7 @@ export default function ListBox() {
                     onClick={(e) => openEditPage(e)}
                     className={`${styles.defaultWidth} ${styles.withCircle}`}
                   >
-                    {subject.sum}
+                    {Number(subject.sum).toFixed(2)}
                     {avaGradePending && (
                       <div
                         className={`${styles.indicatorCircle} ${styles.yellow}`}
@@ -210,7 +219,7 @@ export default function ListBox() {
                     onClick={(e) => openEditPage(e)}
                   >
                     {subject.average ? subject.average : "-"}
-                    {(subject.average < 7 && subject.average) && (
+                    {subject.average < 7 && subject.average && (
                       <div
                         className={`${styles.indicatorCircle} ${styles.red}`}
                         title="Média insuficiente"

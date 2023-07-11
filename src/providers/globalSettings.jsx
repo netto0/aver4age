@@ -22,7 +22,7 @@ export const GlobalSettingsProvider = (props) => {
     need: "",
     summerSchoolGrade: "",
     finalAverage: "",
-    situation:"",
+    situation:"Pendente",
     id:""
   });
   const [searchBarValue, setSearchBarValue] = useState("");

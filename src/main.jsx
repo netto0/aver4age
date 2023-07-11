@@ -8,6 +8,7 @@ import Home from "./routes/Home.jsx";
 import Averages from "./components/pages/Averages/Averages.jsx";
 import Settings from "./routes/Settings.jsx";
 import Profile from "./routes/Profile.jsx"
+import ComingSoon from "./routes/ComingSoon.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,13 +16,15 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {path: '/',
-      element: <Home />},
+      element: <Averages />},
+      {path: '/home',
+      element: <ComingSoon name="Home"/>},
       {path: '/averages',
       element: <Averages />},
       {path: '/settings',
-      element: <Settings />},
+      element: <ComingSoon name="Settings"/>},
       {path: '/profile',
-      element: <Profile />}
+      element: <ComingSoon name="Profile"/>},
 
     ]
   },

@@ -3,21 +3,19 @@
     width: 100%;
     min-width: 900px;
     height: 100%;
-    /* max-height: 663px; */
     border-radius: var(--defaultCurve);
     padding: 0 1rem;
     overflow-y: scroll;
 }
 
 .listboxContainer::-webkit-scrollbar {
-    width: 15px;
+    width: 5px;
 }
 
 .listboxContainer::-webkit-scrollbar-track {
-    margin: 1rem 0;
+    margin: 1rem;
     border-radius: var(--defaultCurve);
     background-color: var(--backgroundGray);
-    
 }
 
 .listboxContainer::-webkit-scrollbar-thumb {
@@ -28,7 +26,10 @@
 
 .subjectName {
     text-align: left;
+    min-width: 200px;
     overflow-x: hidden;
+    white-space: nowrap;
+    word-break: keep-all;
     text-overflow: ellipsis;
 }
 

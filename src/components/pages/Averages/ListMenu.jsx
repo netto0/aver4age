@@ -8,8 +8,8 @@ import { GlobalSettingsContext } from "../../../providers/globalSettings";
 import AddOrEditSubjectBox from "../SubjectBoxes/AddOrEditSubjectBox";
 
 export default function ListMenu() {
-  const { setModalActive, searchBarValue,
-setSearchBarValue } = React.useContext(GlobalSettingsContext);
+  const { setModalActive, searchBarValue, setSearchBarValue } =
+    React.useContext(GlobalSettingsContext);
   const filterItem = ["Nome", "Média", "Situação"];
   const [currentIdx, setCurrentIdx] = useState(0);
   const [decrescentFilter, setDecrescentFilter] = useState(true);
@@ -23,8 +23,8 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
   };
 
   const searchBarHandleChange = (e) => {
-    setSearchBarValue(e.target.value.toUpperCase())
-  }
+    setSearchBarValue(e.target.value.toUpperCase());
+  };
 
   return (
     <div className={styles.listMenuContainer}>
@@ -35,8 +35,8 @@ setSearchBarValue } = React.useContext(GlobalSettingsContext);
       />
       <Input
         placeholder={"Digite o nome da matéria que deseja buscar..."}
-        value= {searchBarValue}
-        icon={<PiMagnifyingGlassBold />}
+        value={searchBarValue}
+        // icon={<PiMagnifyingGlassBold />}
         align="left"
         onChange={(e) => searchBarHandleChange(e)}
       />

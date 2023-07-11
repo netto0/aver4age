@@ -17,7 +17,7 @@ export default function Header() {
             color: isPending ? "red" : "black",
           };
         }}
-        to="/"
+        to="/home"
       >
         INÍCIO
       </NavLink>

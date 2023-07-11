@@ -43,7 +43,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
         sumResult += 0;
       }
     });
-    return Number(sumResult).toFixed(2);
+    return sumResult.toString();
   };
 
   const getAverage = (formData) => {
@@ -70,7 +70,10 @@ export default function AddOrEditSubjectBox({ windowType }) {
 
   const getNeeded = (average) => {
     try {
-      if (average < 7) {
+      if(average === ""){
+        return "";
+      }
+      else if (average < 7) {
         return (10 - parseFloat(average)).toFixed(2).toString();
       } else {
         return "";
@@ -89,7 +92,6 @@ export default function AddOrEditSubjectBox({ windowType }) {
   };
 
   const getSituation = (formData) => {
-    // console.log("situation")
     const {
       ava1,
       ava2,
@@ -123,7 +125,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
 
   // Define se o formulário é válido
   useEffect(() => {
-    if (formData.name !== null && formData.semester !== null) {
+    if (formData.name !== "" && formData.semester !== "") {
       setValidForm(true);
     } else {
       setValidForm(false);
@@ -165,20 +167,20 @@ export default function AddOrEditSubjectBox({ windowType }) {
 
   const closeScreen = () => {
     setFormData({
-      name: null,
-      semester: null,
-      ava1: null,
-      ava2: null,
-      ava3: null,
-      ava4: null,
-      sum: null,
-      pim: null,
-      exam: null,
-      average: null,
-      need: null,
-      summerSchoolGrade: null,
-      finalAverage: null,
-      situation: null,
+      name: "",
+      semester: "",
+      ava1: "",
+      ava2: "",
+      ava3: "",
+      ava4: "",
+      sum: "",
+      pim: "",
+      exam: "",
+      average: "",
+      need: "",
+      summerSchoolGrade: "",
+      finalAverage: "",
+      situation: "Pendente",
     });
     setModalActive(null);
   };
@@ -204,6 +206,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
     }
   ) => {
     e.preventDefault();
+    const currentSituation = getSituation(formData)
     if (windowType === "add") {
       const res = await addSubject(
         name,
@@ -219,7 +222,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
         need,
         summerSchoolGrade,
         finalAverage,
-        situation
+        currentSituation
       );
       if (res) {
         getData();
@@ -240,7 +243,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
         need,
         summerSchoolGrade,
         finalAverage,
-        situation
+        currentSituation
       );
       if (res) {
         getData();
@@ -252,6 +255,7 @@ export default function AddOrEditSubjectBox({ windowType }) {
   return (
     <div className={styles.addSubjectContainer}>
       {/* {JSON.stringify(formData)} */}
+      {/* {formData.average} */}
       {/* {`Soma:${formData.sum} | Pim:${formData.pim} | Prova:${formData.exam} | Média:${formData.average} | Neces.:${formData.need} | MF: ${formData.finalAverage} | ${formData.situation}`}
       <br />
       <br />
@@ -352,6 +356,8 @@ export default function AddOrEditSubjectBox({ windowType }) {
           <Input
             name="summerSchool"
             label="Exame"
+            onlyRead = {formData.average && formData.average >= 7 }
+            title= {formData.average < 7 ? null : "Média acima de 7"}
             min={0}
             max={10}
             type="number"
@@ -373,7 +379,6 @@ export default function AddOrEditSubjectBox({ windowType }) {
             type="submit"
             color={validForm ? "green" : "disabled"}
             disabled={validForm ? false : true}
-            // onClick={(e) => handleSubmit(e, formData)}
           />
         </div>
       </form>

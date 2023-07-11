@@ -1,0 +1,13 @@
+.comingContainer {
+    background-color: #efefef;
+    color: var(--lightGray);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.comingContainer h1 {
+    margin: 0;
+}
